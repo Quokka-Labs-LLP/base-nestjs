@@ -5,9 +5,9 @@ import { appendFile, existsSync, mkdirSync } from 'fs';
 @Injectable()
 export class loggerMiddleware implements NestMiddleware {
     use(req: Request, res: Response, next: NextFunction) {
-        let dateMonthYear = `${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`;
+        const dateMonthYear = `${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`;
         const logDir = `${__dirname}/../../storage/logs/${dateMonthYear}`;
-        let fileName = `general${dateMonthYear}.log`;
+        const fileName = `general${dateMonthYear}.log`;
 
         let content = '============================req===============================================\r\n';
         content += `${req.originalUrl}\r\n`;
@@ -23,7 +23,7 @@ export class loggerMiddleware implements NestMiddleware {
     }
 }
 
-let writeLog = (logDir, fileName, content) => {
+const writeLog = (logDir, fileName, content) => {
     if (!existsSync(logDir)) {
         mkdirSync(logDir, { recursive: true });
     }
