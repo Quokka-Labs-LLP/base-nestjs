@@ -7,21 +7,16 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Get()
-  getAllPosts(): {code: number, data: string} {
+  getAllPosts(){
     const msg =  this.postsService.getAllPosts();
     return {
       code : 102,
       data: `Working!!, ${msg}`
     }
   }
-
-//   @Post()
-//     createpost(@Body(new ValidationPipe()) createPostDto: CreatePostDto) : {
-//     return this.postsService.create(createPostDto);
-//     }
   
-    @Post()
-  async posts(@Body() CreatePostDto: CreatePostDto) {
+  @Post()
+  async posts(@Body(new ValidationPipe()) CreatePostDto: CreatePostDto) {
     try {
       const data =  await this.postsService.createPost(CreatePostDto);
       return {

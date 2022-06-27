@@ -7,10 +7,13 @@ import { GoogleService } from './google.service';
 export class GoogleController {
   constructor(private readonly googleService: GoogleService) {}
 
+  // To authenticate with google
   @Get()
   @UseGuards(AuthGuard('google'))
   async googleAuth(@Req() req) {}
 
+
+  // Redirect url: you will get access_token of google user
   @Get('redirect')
   @UseGuards(AuthGuard('google'))
   googleAuthRedirect(@Req() req) {
