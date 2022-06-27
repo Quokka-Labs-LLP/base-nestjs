@@ -30,7 +30,7 @@ export class UserService {
 
   async registerUser(token: string, email: string, data: any) {
     const userData = data;
-    console.log('userDAta', userData)
+    console.log('userData', userData)
 
     const name = userData.name;
    
@@ -55,13 +55,15 @@ export class UserService {
   }
 
   async getByEmail(email: string) {
-  const newPost = await this.userRepository.findOne({
-    where: {
-      email
-    } 
-  
-  });
-  return newPost;
-}
+    console.log('email',email);
+    const user = await this.userRepository.findOne({
+      where: {
+        email
+      } 
+    
+    });
+    console.log('uuuser', user)
+    return user;
+  }
 
 }

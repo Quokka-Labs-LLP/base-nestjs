@@ -11,11 +11,6 @@ export class PostsService {
       @InjectRepository(Posts)
       private postsRepository: Repository<Posts>
       ) {}
-
-
-  getAllPosts(): string {
-    return 'Hello Posts!';
-  }
   
   async createPost(CreatePostDto: CreatePostDto) {
       console.log('create post', CreatePostDto)

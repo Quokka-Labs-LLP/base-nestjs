@@ -1,10 +1,10 @@
 import { IsString, IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
  
-export class TokenVerificationDto {
+export class UserDto {
   @IsString()
   @IsNotEmpty()
-  token: string;
+  email: string;
 }
  
-export default TokenVerificationDto;
+export default UserDto;

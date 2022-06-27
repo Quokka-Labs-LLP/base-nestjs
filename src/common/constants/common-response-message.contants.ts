@@ -14,5 +14,6 @@ export enum CommonResponseMessageEnum {
     GOOGLE_DATA = "User information from google",
     USER_CREATED = "New User Registered from Google",
     USER_EXIST = "User already Registered from Google",
-    USER_NOT_FOUND = "User not found"
+    USER_NOT_FOUND = "User not found",
+    SUCCESSFUL = "Successful",
 }

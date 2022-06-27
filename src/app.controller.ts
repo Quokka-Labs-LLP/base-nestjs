@@ -11,7 +11,7 @@ export class AppController {
 
     const msg =  this.appService.getHello();
     return {
-      code : 102,
+      code : 1004,
       data: `Working!!, ${msg}`
     }
   }

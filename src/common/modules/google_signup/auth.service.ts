@@ -43,6 +43,7 @@ export class GoogleAuthenticationService {
 
     try {
       const user = await this.userService.getByEmail(email);
+      console.log('user', user)
       if (user)
           return this.userService.handleRegisteredUser(user);
       const data = await this.getUserData(token);
