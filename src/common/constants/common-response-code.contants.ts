@@ -10,4 +10,9 @@ export enum CommonResponseCodeEnum {
     OTP_EXPIRED = 107,
     TOKENS_GENERATED = 108,
     USER_DO_NOT_EXIST = 109,
+    NO_USER_FROM_GOOGLE = 1001,
+
+
+
+    GOOGLE_DATA = 2001
 }
