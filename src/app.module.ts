@@ -6,6 +6,8 @@ import { loggerMiddleware } from './common/middleware/logger.middleware';
 import * as Joi from '@hapi/joi';
 import { DatabaseModule } from './common/modules/database/database.module';
 import { PostsModule } from './common/modules/posts/posts.module';
+import { GoogleModule } from './common/modules/google_auth/google.module';
+import { GoogleAuthenticationModule } from './common/modules/google_signup/auth.module';
 
 @Module({
   imports: [ 
@@ -18,7 +20,7 @@ import { PostsModule } from './common/modules/posts/posts.module';
       POSTGRES_PASSWORD: Joi.string().required(),
       POSTGRES_DB: Joi.string().required()
     })
-  }), DatabaseModule, PostsModule],
+  }), DatabaseModule, PostsModule,GoogleModule,GoogleAuthenticationModule],
   controllers: [AppController],
   providers: [AppService],
 })

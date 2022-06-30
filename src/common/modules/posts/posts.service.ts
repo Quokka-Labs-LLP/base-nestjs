@@ -7,16 +7,11 @@ import Posts from './posts.entity';
 
 @Injectable()
 export class PostsService {
-    constructor(
-        @InjectRepository(Posts)
-        private postsRepository: Repository<Posts>
-        ) {}
-
-
-  getAllPosts(): string {
-    return 'Hello Posts!';
-  }
-
+  constructor(
+      @InjectRepository(Posts)
+      private postsRepository: Repository<Posts>
+      ) {}
+  
   async createPost(CreatePostDto: CreatePostDto) {
       console.log('create post', CreatePostDto)
     const newPost = await this.postsRepository.create({

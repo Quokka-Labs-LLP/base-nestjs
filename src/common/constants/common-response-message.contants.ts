@@ -10,5 +10,10 @@ export enum CommonResponseMessageEnum {
     OTP_EXPIRED = "Otp has expired.",
     TOKENS_GENERATED = "Tokens generated.",
     USER_DO_NOT_EXIST = "This user does not exist.",
-    
+    NO_USER_FROM_GOOGLE = "No user from google",
+    GOOGLE_DATA = "User information from google",
+    USER_CREATED = "New User Registered from Google",
+    USER_EXIST = "User already Registered from Google",
+    USER_NOT_FOUND = "User not found",
+    SUCCESSFUL = "Successful",
 }

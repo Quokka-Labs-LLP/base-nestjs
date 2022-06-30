@@ -5,11 +5,13 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
+
   @Get()
   getHello(): {code: number, data: string} {
+
     const msg =  this.appService.getHello();
     return {
-      code : 102,
+      code : 1004,
       data: `Working!!, ${msg}`
     }
   }
