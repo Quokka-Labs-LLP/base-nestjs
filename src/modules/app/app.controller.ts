@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { ResponseInterface } from 'src/common/interfaces/response.interface';
 import { AppService } from './app.service';
 
 @Controller()
@@ -6,7 +7,7 @@ export class AppController {
   constructor(private readonly appService: AppService) { }
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  async getHello(): Promise<ResponseInterface> {
+    return { message: this.appService.getHello() };
   }
 }
