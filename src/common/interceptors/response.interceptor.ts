@@ -1,7 +1,7 @@
 import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Observable, map } from 'rxjs';
-import { ResponseInterface } from '../interfaces/response.interface';
+import { ResponseInterface } from '../interfaces/Responses/response.interface';
 
 @Injectable()
 export class ResponseInterceptor implements NestInterceptor {
@@ -22,13 +22,12 @@ export class ResponseInterceptor implements NestInterceptor {
                 metadata: {
                     api_version: this.configService.get('API_VERSION'),
                     api_url: request.url,
-                    http_method: request.method,
                     response_time: `${Date.now() - now}ms`
                 }
             })));
         }
 
-        // If environment is dev/development then can show class name and handler name in metadata
+        // If environment is local/development then can show class name and handler name in metadata
         return next.handle().pipe(map((response: ResponseInterface) => ({
             success: true,
             status: response?.status || 200,
