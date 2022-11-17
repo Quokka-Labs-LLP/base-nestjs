@@ -1,5 +1,6 @@
 import { ConfigService } from '@nestjs/config/dist';
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerDocumentOptions, SwaggerModule } from '@nestjs/swagger';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { HttpExceptionsFilter } from './common/filters/http-exceptions.filter';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
@@ -19,6 +20,26 @@ async function bootstrap() {
 
   // Set global interceptors
   app.useGlobalInterceptors(new ResponseInterceptor(configService));
+
+  // Initializing swagger for APIs documentation
+  if (configService.get('NODE_ENV') !== 'production' && configService.get('NODE_ENV') !== 'prod') {
+    const config = new DocumentBuilder()
+      .setTitle(`${configService.get('APP_NAME')} APIs`)
+      .setDescription(`The ${configService.get('APP_NAME')} API documentation`)
+      .setVersion(`${configService.get('API_VERSION')}`)
+      .addTag(`${configService.get('APP_NAME')}`)
+      .build();
+
+    const options: SwaggerDocumentOptions = {
+      operationIdFactory: (
+        controllerKey: string,
+        methodKey: string
+      ) => `${controllerKey}@${methodKey}`
+    };
+
+    const document = SwaggerModule.createDocument(app, config, options);
+    SwaggerModule.setup(`api/v${configService.get('API_VERSION').split('.')[0]}`, app, document);
+  }
 
 
   // Listening server on port
