@@ -19,7 +19,7 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionsFilter(configService), new AllExceptionsFilter(configService));
 
   // Set global interceptors
-  app.useGlobalInterceptors(new ResponseInterceptor(configService));
+  app.useGlobalInterceptors(new ResponseInterceptor());
 
   // Initializing swagger for APIs documentation
   if (configService.get('NODE_ENV') !== 'production' && configService.get('NODE_ENV') !== 'prod') {
