@@ -8,8 +8,8 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     ConfigModule.forRoot({
       validationSchema: Joi.object({
-        API_VERSION: Joi.string().default('1.0'),
-        SERVER_PORT: Joi.number().default(3000).required()
+        API_VERSION: Joi.string().required(),
+        SERVER_PORT: Joi.number().required()
       }),
       envFilePath: ['.env.local', '.env.development', '.env.production'],
       isGlobal: true,
