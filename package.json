@@ -19,15 +19,14 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "doc": "npx @compodoc/compodoc -p tsconfig.json"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged && sonar-scanner"
-    }
+    "doc": "npx @compodoc/compodoc -p tsconfig.json",
+    "prepare": "husky install"
   },
   "lint-staged": {
-    "src/*.{js,ts}": ["eslint . --fix", "prettier --write ."]
+    "src/*.{js,ts}": [
+      "eslint . --fix",
+      "prettier --write ."
+    ]
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.8.1",
