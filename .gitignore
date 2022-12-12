@@ -1,6 +1,8 @@
 # compiled output
 /dist
 /node_modules
+/documentation
+/.scannerwork
 
 # Logs
 logs
@@ -15,6 +17,9 @@ lerna-debug.log*
 .env.local
 .env.development
 .env.production
+
+# 
+sonar-project.properties
 
 # OS
 .DS_Store

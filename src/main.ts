@@ -1,7 +1,11 @@
 import { VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config/dist';
 import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerDocumentOptions, SwaggerModule } from '@nestjs/swagger';
+import {
+  DocumentBuilder,
+  SwaggerDocumentOptions,
+  SwaggerModule,
+} from '@nestjs/swagger';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { HttpExceptionsFilter } from './common/filters/http-exceptions.filter';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
@@ -19,17 +23,23 @@ async function bootstrap() {
   // Enable versioning (eg:- /api/v1, /api/v2)
   app.enableVersioning({
     type: VersioningType.URI,
-    defaultVersion: `${configService.get('API_VERSION').split('.')[0]}`
+    defaultVersion: `${configService.get('API_VERSION').split('.')[0]}`,
   });
 
   // Set global exception filters
-  app.useGlobalFilters(new HttpExceptionsFilter(configService), new AllExceptionsFilter(configService));
+  app.useGlobalFilters(
+    new HttpExceptionsFilter(configService),
+    new AllExceptionsFilter(configService),
+  );
 
   // Set global interceptors
   app.useGlobalInterceptors(new ResponseInterceptor());
 
   // Initializing swagger for APIs documentation
-  if (configService.get('NODE_ENV') !== 'production' && configService.get('NODE_ENV') !== 'prod') {
+  if (
+    configService.get('NODE_ENV') !== 'production' &&
+    configService.get('NODE_ENV') !== 'prod'
+  ) {
     const config = new DocumentBuilder()
       .setTitle(`${configService.get('APP_NAME')}`)
       .setDescription(`The ${configService.get('APP_NAME')} APIs documentation`)
@@ -38,27 +48,38 @@ async function bootstrap() {
       .build();
 
     const documentOptions: SwaggerDocumentOptions = {
-      operationIdFactory: (controllerKey: string, methodKey: string) => `${controllerKey}@${methodKey}`
+      operationIdFactory: (controllerKey: string, methodKey: string) =>
+        `${controllerKey}@${methodKey}`,
     };
 
     // Custom styling of swagger UI section
     const styleOptions = {
       customSiteTitle: `${configService.get('APP_NAME')}`,
-      customCss: `.topbar-wrapper img {content:url(${configService.get('APP_LOGO')})}`,
-      customfavIcon: `${configService.get('APP_FAVICON')}`
+      customCss: `.topbar-wrapper img {content:url(${configService.get(
+        'APP_LOGO',
+      )})}`,
+      customfavIcon: `${configService.get('APP_FAVICON')}`,
     };
 
     const document = SwaggerModule.createDocument(app, config, documentOptions);
-    SwaggerModule.setup(`api/v${configService.get('API_VERSION').split('.')[0]}`, app, document, styleOptions);
+    SwaggerModule.setup(
+      `api/v${configService.get('API_VERSION').split('.')[0]}`,
+      app,
+      document,
+      styleOptions,
+    );
   }
-
 
   // Listening server on port
   const serverPort = configService.get('SERVER_PORT');
   await app.listen(serverPort, async () => {
     const serverHost = await app.getUrl();
-    console.log(`Nest application started successfully`)
-    console.info(`Server is running on ${serverHost}/api/v${configService.get('API_VERSION').split('.')[0]}`);
+    console.log(`Nest application started successfully`);
+    console.info(
+      `Server is running on ${serverHost}/api/v${
+        configService.get('API_VERSION').split('.')[0]
+      }`,
+    );
   });
 }
 bootstrap();
