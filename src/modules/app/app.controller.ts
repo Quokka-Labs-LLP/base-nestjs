@@ -6,9 +6,9 @@ import { AppService } from './app.service';
 @ApiTags(AppController.name)
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) { }
 
-  @Get('/home')
+  @Get('home')
   async getHello(): Promise<ResponseInterface> {
     return { message: this.appService.getHello() };
   }
