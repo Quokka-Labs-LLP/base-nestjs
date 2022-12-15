@@ -17,14 +17,14 @@ describe('AppController', () => {
   describe('home', () => {
     it('should return "Hello World!"', async () => {
       const response = await appController.getHello();
-      expect(response.message).toBe("Hello World!");
+      expect(response.message).toBe('Hello World!');
     });
   });
 
   describe('healthcheck', () => {
     it('should return "Server up & running"', async () => {
       const response = await appController.healthCheck();
-      expect(response.message).toBe("Server up & running");
+      expect(response.message).toBe('Server up & running');
     });
   });
 });

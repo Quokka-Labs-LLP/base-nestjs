@@ -5,7 +5,7 @@ import {
   CallHandler,
 } from '@nestjs/common';
 import { Observable, map } from 'rxjs';
-import { ResponseInterface } from '../interfaces/Responses/response.interface';
+import { ResponseInterface } from '@interfaces/Responses/response.interface';
 
 @Injectable()
 export class ResponseInterceptor implements NestInterceptor {

@@ -6,9 +6,9 @@ import {
   SwaggerDocumentOptions,
   SwaggerModule,
 } from '@nestjs/swagger';
-import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
-import { HttpExceptionsFilter } from './common/filters/http-exceptions.filter';
-import { ResponseInterceptor } from './common/interceptors/response.interceptor';
+import { AllExceptionsFilter } from '@filters/all-exceptions.filter';
+import { HttpExceptionsFilter } from '@filters/http-exceptions.filter';
+import { ResponseInterceptor } from '@interceptors/response.interceptor';
 import { AppModule } from './modules/app/app.module';
 
 async function bootstrap() {
