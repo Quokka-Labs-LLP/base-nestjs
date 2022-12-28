@@ -45,6 +45,10 @@ async function bootstrap() {
       .setDescription(`The ${configService.get('APP_NAME')} APIs documentation`)
       .setVersion(`${configService.get('API_VERSION')}`)
       .addTag(`${configService.get('APP_NAME')}`)
+      .setExternalDoc(
+        'Postman Collection',
+        `v${configService.get('API_VERSION').split('.')[0]}-json`,
+      )
       .build();
 
     const documentOptions: SwaggerDocumentOptions = {
