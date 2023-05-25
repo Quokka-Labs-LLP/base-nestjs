@@ -15,4 +15,5 @@ if ! [[ $commit_msg =~ $regex ]]; then
  echo "Commit message does not match the required format." 
  echo "Please use the following format: (type)[WEBE-XXXX] message(optional)" 
  echo "Where type is one of: fix, update, style, refactor, feat" 
- exit 1 
+ exit 1
+ fi
