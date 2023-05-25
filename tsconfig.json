@@ -12,10 +12,23 @@
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "strictBindCallApply": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@config/*": ["src/common/config/*"],
+      "@constants/*": ["src/common/constants/*"],
+      "@filters/*": ["src/common/filters/*"],
+      "@guards/*": ["src/common/guards/*"],
+      "@helpers/*": ["src/common/helpers/*"],
+      "@interceptors/*": ["src/common/interceptors/*"],
+      "@interfaces/*": ["src/common/interfaces/*"],
+      "@middlewares/*": ["src/common/middlewares/*"],
+      "@pipes/*": ["src/common/pipes/*"],
+      "@resources/*": ["src/common/resources/*"],
+      "@utils/*": ["src/common/utils/*"]
+    }
   }
 }

@@ -1,28 +1,89 @@
+import { VersioningType } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config/dist';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { QueryFailedExceptionFilter } from './common/filters/dbexception.filter';
-import { HttpExceptionFilter } from './common/filters/exception.filter';
-import { GlobalExceptionFilter } from './common/filters/globalexception.filter';
-import { ApiResponseInterceptor } from './common/interceptor/response.interceptor';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import {
+  DocumentBuilder,
+  SwaggerDocumentOptions,
+  SwaggerModule,
+} from '@nestjs/swagger';
+import { AllExceptionsFilter } from '@filters/all-exceptions.filter';
+import { HttpExceptionsFilter } from '@filters/http-exceptions.filter';
+import { ResponseInterceptor } from '@interceptors/response.interceptor';
+import { AppModule } from './modules/app/app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { logger: false });
 
-  const swaggerConfig = new DocumentBuilder()
-  .setTitle('API with NestJS')
-  .setDescription('API developed throughout the API with Common-node-ts repo')
-  .setVersion('1.0')
-  .build();
+  // Getting config service for accessing environment variable
+  const configService = app.get(ConfigService);
 
-  const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('api', app, document);
+  // Setting global path starts with : - /api
+  app.setGlobalPrefix('api');
 
-  app.useGlobalFilters(new GlobalExceptionFilter(), new QueryFailedExceptionFilter(), new HttpExceptionFilter());
-  app.useGlobalInterceptors(new ApiResponseInterceptor());
+  // Enable versioning (eg:- /api/v1, /api/v2)
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: `${configService.get('API_VERSION').split('.')[0]}`,
+  });
 
+  // Set global exception filters
+  app.useGlobalFilters(
+    new HttpExceptionsFilter(configService),
+    new AllExceptionsFilter(configService),
+  );
 
+  // Set global interceptors
+  app.useGlobalInterceptors(new ResponseInterceptor());
 
-  await app.listen(3000);
+  // Initializing swagger for APIs documentation
+  if (
+    configService.get('NODE_ENV') !== 'production' &&
+    configService.get('NODE_ENV') !== 'prod'
+  ) {
+    const config = new DocumentBuilder()
+      .setTitle(`${configService.get('APP_NAME')}`)
+      .setDescription(`The ${configService.get('APP_NAME')} APIs documentation`)
+      .setVersion(`${configService.get('API_VERSION')}`)
+      .addTag(`${configService.get('APP_NAME')}`)
+      .setExternalDoc(
+        'Postman Collection',
+        `v${configService.get('API_VERSION').split('.')[0]}-json`,
+      )
+      .build();
+
+    const documentOptions: SwaggerDocumentOptions = {
+      operationIdFactory: (controllerKey: string, methodKey: string) =>
+        `${controllerKey}@${methodKey}`,
+    };
+
+    // Custom styling of swagger UI section
+    const styleOptions = {
+      customSiteTitle: `${configService.get('APP_NAME')}`,
+      customCss: `.topbar-wrapper img {content:url(${configService.get(
+        'APP_LOGO',
+      )})}`,
+      customfavIcon: `${configService.get('APP_FAVICON')}`,
+    };
+
+    const document = SwaggerModule.createDocument(app, config, documentOptions);
+    SwaggerModule.setup(
+      `api/v${configService.get('API_VERSION').split('.')[0]}`,
+      app,
+      document,
+      styleOptions,
+    );
+  }
+
+  // Listening server on port
+  const serverPort = configService.get('SERVER_PORT');
+  await app.listen(serverPort, async () => {
+    const serverHost = await app.getUrl();
+    console.log(`Nest application started successfully`);
+    console.info(
+      `Server is running on ${serverHost}/api/v${
+        configService.get('API_VERSION').split('.')[0]
+      }`,
+    );
+  });
 }
 bootstrap();
