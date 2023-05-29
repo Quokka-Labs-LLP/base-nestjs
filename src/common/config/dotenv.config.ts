@@ -62,6 +62,37 @@ export const dotenvConfig = (): ConfigModuleOptions => ({
       then: Joi.string().required(),
       otherwise: Joi.optional(),
     }),
+    DATABASE_TYPE: Joi.string().required().valid('MongoDB', 'RDB'),
+    MONGO_URI: Joi.alternatives().conditional('DATABASE_TYPE', {
+      is: 'MongoDB',
+      then: Joi.string().required(),
+      otherwise: Joi.optional(),
+    }),
+    RDB_HOST: Joi.alternatives().conditional('DATABASE_TYPE', {
+      is: 'RDB',
+      then: Joi.string().required(),
+      otherwise: Joi.optional(),
+    }),
+    RDB_PORT: Joi.alternatives().conditional('DATABASE_TYPE', {
+      is: 'RDB',
+      then: Joi.string().required(),
+      otherwise: Joi.optional(),
+    }),
+    RDB_USERNAME: Joi.alternatives().conditional('DATABASE_TYPE', {
+      is: 'RDB',
+      then: Joi.string().required(),
+      otherwise: Joi.optional(),
+    }),
+    RDB_PASSWORD: Joi.alternatives().conditional('DATABASE_TYPE', {
+      is: 'RDB',
+      then: Joi.string().required(),
+      otherwise: Joi.optional(),
+    }),
+    RDB_DATABASE: Joi.alternatives().conditional('DATABASE_TYPE', {
+      is: 'RDB',
+      then: Joi.string().required(),
+      otherwise: Joi.optional(),
+    }),
   }),
   envFilePath: ['.env.local', '.env.development', '.env.production'],
   isGlobal: true,
