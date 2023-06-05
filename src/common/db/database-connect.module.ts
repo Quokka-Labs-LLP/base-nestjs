@@ -2,6 +2,7 @@ import { Module, DynamicModule } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { DATABASE_TYPE } from '@config/constant';
 
 @Module({})
 export class DatabaseConnectModule {
@@ -17,7 +18,7 @@ export class DatabaseConnectModule {
     const databaseType = config.get<string>('DATABASE_TYPE');
 
     let databaseModule: DynamicModule;
-    if (databaseType === 'MongoDB') {
+    if (databaseType === DATABASE_TYPE.MongoDB) {
       databaseModule = MongooseModule.forRootAsync({
         imports: [ConfigModule],
         inject: [ConfigService],
@@ -31,7 +32,7 @@ export class DatabaseConnectModule {
         }),
       });
       console.log('Connected to MongoDb database using Mongoose');
-    } else if (databaseType === 'RDB') {
+    } else if (databaseType === DATABASE_TYPE.RDB) {
       databaseModule = TypeOrmModule.forRootAsync({
         imports: [ConfigModule],
         useFactory: (configService: ConfigService) => ({
