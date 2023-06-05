@@ -4,11 +4,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({})
-export class DatabaseModule {
+export class DatabaseConnectModule {
   static forRoot(): DynamicModule {
     return {
-      module: DatabaseModule,
-      imports: [DatabaseModule.getDatabaseModule()],
+      module: DatabaseConnectModule,
+      imports: [DatabaseConnectModule.getDatabaseModule()],
     };
   }
 
