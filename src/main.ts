@@ -10,9 +10,17 @@ import { AllExceptionsFilter } from '@filters/all-exceptions.filter';
 import { HttpExceptionsFilter } from '@filters/http-exceptions.filter';
 import { ResponseInterceptor } from '@interceptors/response.interceptor';
 import { AppModule } from './modules/app/app.module';
+import * as bodyParser from 'body-parser';
+import GlobalValidationPipe from '@pipes/global-validation.pipe';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { logger: false });
+  const app = await NestFactory.create(AppModule);
+
+  app.use(bodyParser.json({ limit: '50mb' }));
+  app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
+  // Enable CORS
+  app.enableCors();
 
   // Getting config service for accessing environment variable
   const configService = app.get(ConfigService);
@@ -34,6 +42,9 @@ async function bootstrap() {
 
   // Set global interceptors
   app.useGlobalInterceptors(new ResponseInterceptor());
+
+  // Set global validation pipe
+  app.useGlobalPipes(GlobalValidationPipe);
 
   // Initializing swagger for APIs documentation
   if (
