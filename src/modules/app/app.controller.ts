@@ -10,11 +10,13 @@ export class AppController {
 
   @Get('home')
   async getHello(): Promise<ResponseInterface> {
-    return { message: this.appService.getHello() };
+    const response = this.appService.getHello();
+    return { status: 1000, data: { response } };
   }
 
   @Get('healthcheck')
   async healthCheck(): Promise<ResponseInterface> {
-    return { message: this.appService.healthCheck() };
+    const response = this.appService.healthCheck();
+    return { status: 1000, data: { response } };
   }
 }

@@ -17,6 +17,8 @@
     "strictBindCallApply": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "paths": {
       "@config/*": ["src/common/config/*"],
       "@constants/*": ["src/common/constants/*"],
