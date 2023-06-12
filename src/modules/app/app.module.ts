@@ -5,12 +5,18 @@ import { ConfigModule } from '@nestjs/config';
 import { MailModule } from '../mail/mail.module';
 import { dotenvConfig } from '@config/dotenv.config';
 import { DatabaseConnectModule } from '../../common/db/database-connect.module';
+import { AuthModule } from '../auth/auth.module';
+import { UserModule } from '../user/user.module';
+import { OtpModule } from '../otp/otp.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(dotenvConfig()),
     MailModule,
     DatabaseConnectModule.forRoot(),
+    AuthModule,
+    UserModule,
+    OtpModule,
   ],
   controllers: [AppController],
   providers: [AppService],

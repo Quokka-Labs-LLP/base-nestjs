@@ -1,4 +1,4 @@
-import { VersioningType } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config/dist';
 import { NestFactory } from '@nestjs/core';
 import {
@@ -12,7 +12,7 @@ import { ResponseInterceptor } from '@interceptors/response.interceptor';
 import { AppModule } from './modules/app/app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { logger: false });
+  const app = await NestFactory.create(AppModule);
 
   // Getting config service for accessing environment variable
   const configService = app.get(ConfigService);
@@ -25,6 +25,7 @@ async function bootstrap() {
     type: VersioningType.URI,
     defaultVersion: `${configService.get('API_VERSION').split('.')[0]}`,
   });
+  app.useGlobalPipes(new ValidationPipe());
 
   // Set global exception filters
   app.useGlobalFilters(
