@@ -1,17 +1,19 @@
 import {
   ForbiddenException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from '../../common/models/user.schema';
-import { SignupDto, LoginDto } from './dto/auth.dto';
+import { SignupDto, LoginDto, ResetPasswordDto } from './dto/auth.dto';
 import * as argon2 from 'argon2';
 import { JwtPayload } from '@interfaces/Auth/jwtpayload.interface';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { LoginResponse } from './responses/login.interface';
+import { OtpService } from '../otp/otp.service';
 
 @Injectable()
 export class AuthService {
@@ -19,6 +21,7 @@ export class AuthService {
     @InjectModel(User.name) private userModel: Model<User>,
     private jwtService: JwtService,
     private configService: ConfigService,
+    private otpService: OtpService,
   ) {}
   async signup(data: SignupDto) {
     const { email, password, firstName, lastName } = data;
@@ -71,6 +74,25 @@ export class AuthService {
     const payload = { userId: _id.toString(), email, firstName, lastName };
     const { accessToken } = await this.generateTokens(payload);
     return accessToken;
+  }
+
+  async forgotPassword(email: string): Promise<void> {
+    const user = await this.userModel.findOne({ email });
+    if (!user) throw new NotFoundException('User not found for provided email');
+    await this.otpService.createOtp({ email });
+  }
+
+  async resetPassword(data: ResetPasswordDto): Promise<void> {
+    const { email, password, pin } = data;
+    const user = await this.userModel.findOne({ email });
+    if (!user) throw new NotFoundException('User not found for provided email');
+    await this.otpService.verifyOtp({ email, pin });
+    const hashedPassword = await argon2.hash(password);
+    await this.userModel.findOneAndUpdate(
+      { email },
+      { password: hashedPassword },
+      { upsert: true },
+    );
   }
 
   async generateTokens(payload: JwtPayload): Promise<{

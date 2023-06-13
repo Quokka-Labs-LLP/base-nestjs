@@ -18,7 +18,7 @@ export class OtpService {
     private mailService: MailService,
     private configService: ConfigService,
   ) {}
-  async createOtp(data: CreateOtpDto) {
+  async createOtp(data: CreateOtpDto): Promise<void> {
     const { email } = data;
     const otpLength = this.configService.get('OTP_LENGTH');
     const otpExpireTime = this.configService.get('OTP_EXPIRY_MINUTES');
@@ -30,16 +30,15 @@ export class OtpService {
       { pin: await argon2.hash(pin), expiry },
       { upsert: true },
     );
-    if (otpCreated)
-      // customise email to be sent here
-      //   this.mailService.sendMail({
-      //     to: email,
-      //     subject: 'OTP Verification',
-      //     context: {
-      //       otp: pin,
-      //     },
-      //   });
-      return true;
+    // if (otpCreated)
+    // customise email to be sent here
+    //   this.mailService.sendMail({
+    //     to: email,
+    //     subject: 'OTP Verification',
+    //     context: {
+    //       otp: pin,
+    //     },
+    //   });
   }
 
   async verifyOtp(data: VerifyOtpDto) {

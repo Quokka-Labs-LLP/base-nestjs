@@ -12,5 +12,6 @@ import { MailModule } from '../mail/mail.module';
   ],
   controllers: [OtpController],
   providers: [OtpService],
+  exports: [OtpService],
 })
 export class OtpModule {}

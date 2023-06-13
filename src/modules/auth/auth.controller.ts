@@ -1,6 +1,11 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { SignupDto, LoginDto } from './dto/auth.dto';
+import {
+  SignupDto,
+  LoginDto,
+  ForgotPasswordDto,
+  ResetPasswordDto,
+} from './dto/auth.dto';
 import { ResponseInterface } from '@interfaces/Responses/response.interface';
 import { LoginResponse } from './responses/login.interface';
 import { RefreshAuthGuard } from './guards/auth.guard';
@@ -40,6 +45,30 @@ export class AuthController {
       success: true,
       status: 1005,
       data: { accessToken },
+    };
+  }
+
+  @Post('/forgot-password')
+  async forgotPassword(
+    @Body() data: ForgotPasswordDto,
+  ): Promise<ResponseInterface> {
+    const { email } = data;
+    await this.authService.forgotPassword(email);
+    return {
+      success: true,
+      status: 1002,
+    };
+  }
+
+  @Post('/reset-password')
+  async resetPassword(
+    @Body() data: ResetPasswordDto,
+  ): Promise<ResponseInterface> {
+    const { email, password, pin } = data;
+    await this.authService.resetPassword({ email, password, pin });
+    return {
+      success: true,
+      status: 1007,
     };
   }
 }

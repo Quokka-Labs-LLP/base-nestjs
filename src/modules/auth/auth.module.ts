@@ -7,6 +7,7 @@ import { AuthController } from './auth.controller';
 import { AccessTokenStrategy } from './strategies/access-token.strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RefreshTokenStrategy } from './strategies/refresh-token.strategy';
+import { OtpModule } from '../otp/otp.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { RefreshTokenStrategy } from './strategies/refresh-token.strategy';
       inject: [ConfigService],
     }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    OtpModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, AccessTokenStrategy, RefreshTokenStrategy],

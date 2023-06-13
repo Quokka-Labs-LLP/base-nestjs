@@ -6,5 +6,6 @@
   "1003": "Otp verified successfully",
   "1004": "User logged in successfully",
   "1005": "Access token fetched successfully",
-  "1006": "User profile fetched successfully"
+  "1006": "User profile fetched successfully",
+  "1007": "Password reset success"
 }
