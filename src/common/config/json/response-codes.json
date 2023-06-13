@@ -1,0 +1,10 @@
+{
+  "999": "No data found",
+  "1000": "Request processed",
+  "1001": "User registered successfully",
+  "1002": "Otp sent successfully",
+  "1003": "Otp verified successfully",
+  "1004": "User logged in successfully",
+  "1005": "Access token fetched successfully",
+  "1006": "User profile fetched successfully"
+}

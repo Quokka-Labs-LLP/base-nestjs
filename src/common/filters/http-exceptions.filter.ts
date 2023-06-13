@@ -23,9 +23,7 @@ export class HttpExceptionsFilter implements ExceptionFilter {
       success: false,
       status: status,
       message: exception.message,
-      data: {
-        ...(env && { error: exception.stack }),
-      },
+      data: { ...(env && { error: exception.stack }) },
     });
   }
 }

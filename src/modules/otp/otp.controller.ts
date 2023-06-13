@@ -12,7 +12,7 @@ export class OtpController {
     await this.otpService.createOtp(data);
     return {
       success: true,
-      message: 'Otp created successfully',
+      status: 1002,
     };
   }
 
@@ -21,6 +21,7 @@ export class OtpController {
     await this.otpService.verifyOtp(data);
     return {
       success: true,
+      status: 1003,
       message: 'Otp verified successfully',
     };
   }

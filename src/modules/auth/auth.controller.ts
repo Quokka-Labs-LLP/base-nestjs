@@ -14,7 +14,7 @@ export class AuthController {
     await this.authService.signup(data);
     return {
       success: true,
-      message: 'User created successfully',
+      status: 1001,
     };
   }
 
@@ -23,7 +23,7 @@ export class AuthController {
     const result: LoginResponse = await this.authService.login(data);
     return {
       success: true,
-      message: 'User loggedin successfully',
+      status: 1004,
       data: result,
     };
   }
@@ -38,7 +38,7 @@ export class AuthController {
     );
     return {
       success: true,
-      message: 'Access token fetched successfully',
+      status: 1005,
       data: { accessToken },
     };
   }

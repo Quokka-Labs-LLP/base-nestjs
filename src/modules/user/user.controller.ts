@@ -12,7 +12,7 @@ export class UserController {
     const result = await this.userService.getUserProfile(id);
     return {
       success: true,
-      message: 'User profile fetched',
+      status: 1006,
       data: result,
     };
   }

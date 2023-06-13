@@ -11,6 +11,7 @@ import { Response } from 'express';
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
   constructor(private readonly configService: ConfigService) {}
+
   catch(exception: unknown, host: ArgumentsHost): void {
     const env =
       this.configService.get('NODE_ENV') === 'local' ||
@@ -37,7 +38,9 @@ export class AllExceptionsFilter implements ExceptionFilter {
             : 'Internal server error',
         data: {
           ...(env &&
-            exception instanceof HttpException && { error: exception.stack }),
+            exception instanceof HttpException && {
+              error: exception.getResponse(),
+            }),
         },
       });
   }
