@@ -1,5 +1,5 @@
-import { AuthPayload } from 'src/modules/auth/interaces/payload.interfaces';
-import { AuthResponse } from '@interfaces/Auth/response.interfaces';
+import { AuthPayload } from 'src/modules/auth/interaces/payload.interface';
+import { AuthResponse } from '@interfaces/Auth/response.interface';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
