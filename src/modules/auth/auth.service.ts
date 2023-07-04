@@ -1,4 +1,4 @@
-import { AuthPayload } from '@interfaces/Auth/payload.interfaces';
+import { AuthPayload } from 'src/modules/auth/interaces/payload.interfaces';
 import { AuthResponse } from '@interfaces/Auth/response.interfaces';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';

@@ -93,7 +93,6 @@ export const dotenvConfig = (): ConfigModuleOptions => ({
       then: Joi.string().required(),
       otherwise: Joi.optional(),
     }),
-    FBASE_PUBLIC_KEY: Joi.string().required(),
     ACCESS_TOKEN_SECRET: Joi.string().required(),
     ACCESS_TOKEN_EXPIRATION: Joi.string().required(),
     REFRESH_TOKEN_SECRET: Joi.string().required(),

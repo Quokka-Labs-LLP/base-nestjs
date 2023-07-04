@@ -4,7 +4,7 @@ import { Controller, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config'; 
 import { Response } from 'express';
 import { AuthService } from './auth.service';
-import { FirebaseMobileAuthGuard } from './guards/auth.guard';
+import { FirebaseGuard } from './guards/firebase.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -18,7 +18,7 @@ export class AuthController {
   }
   
   @Post()
-  @UseGuards(FirebaseMobileAuthGuard)
+  @UseGuards(FirebaseGuard)
   async auth(
     @Req() request: any,
     @Res({ passthrough: true }) response: Response,
