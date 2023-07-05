@@ -20,8 +20,7 @@ export class AuthController {
   @Post()
   @UseGuards(FirebaseGuard)
   async auth(
-    @Req() request: any,
-    @Res({ passthrough: true }) response: Response,
+    @Req() request: any
   ): Promise<ResponseInterface> {
     const tokens: AuthResponse = await this.authService.auth(request.user.phone_number);
 
