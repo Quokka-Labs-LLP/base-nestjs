@@ -1,4 +1,4 @@
-import { PASSPORT_AUTHGUARD } from '@config/constant';
+import { PASSPORT_AUTHGUARD } from '../../../common/config/constant';
 import { Injectable } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 

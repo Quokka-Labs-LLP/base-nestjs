@@ -5,8 +5,8 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Otp } from 'src/common/models/otp.schema';
-import { MailService } from '../mail/mail.service';
+import { Otp } from '../../common/models/otp.schema';
+// import { MailService } from '../mail/mail.service';
 import { ConfigService } from '@nestjs/config';
 import { CreateOtpDto, VerifyOtpDto } from './dto/otp.dto';
 import * as argon2 from 'argon2';
@@ -15,7 +15,7 @@ import * as argon2 from 'argon2';
 export class OtpService {
   constructor(
     @InjectModel(Otp.name) private otpModel: Model<Otp>,
-    private mailService: MailService,
+    // private mailService: MailService,
     private configService: ConfigService,
   ) {}
   async createOtp(data: CreateOtpDto): Promise<void> {
