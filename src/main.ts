@@ -12,6 +12,9 @@ import { ResponseInterceptor } from '@interceptors/response.interceptor';
 import { AppModule } from './modules/app/app.module';
 import * as bodyParser from 'body-parser';
 import GlobalValidationPipe from '@pipes/global-validation.pipe';
+import * as admin from 'firebase-admin';
+import serviceAccount from '../firebaseCred.json';
+import { ServiceAccount } from 'firebase-admin';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -84,6 +87,11 @@ async function bootstrap() {
       styleOptions,
     );
   }
+
+  // Initialize firebase admin app
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount as ServiceAccount),
+  });
 
   // Listening server on port
   const serverPort = configService.get('SERVER_PORT');

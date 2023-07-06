@@ -1,4 +1,6 @@
 {
+  "200": "Data found successfully",
   "999": "No data found",
-  "1000": "Request processed"
+  "1000": "Request processed",
+  "1001": "Google login successful"
 }
