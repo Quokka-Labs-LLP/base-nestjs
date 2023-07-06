@@ -18,7 +18,7 @@ export class FirebaseGuard implements CanActivate {
     }
     const phoneNumber = await this.getPhoneNumber(firebaseToken);
     if (!phoneNumber) {
-      throw new BadRequestException('Could not extract mobile number');
+      throw new BadRequestException('Could not extract phone number');
     }
     request['user'] = {
       phoneNumber,
