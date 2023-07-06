@@ -5,8 +5,8 @@ import {
   ForbiddenException,
   Injectable,
 } from '@nestjs/common';
-import { FirebaseUtils } from '@utils/firebase.utils';
 import { Request } from 'express';
+import * as admin from 'firebase-admin';
 
 @Injectable()
 export class FirebaseGuard implements CanActivate {
@@ -16,14 +16,35 @@ export class FirebaseGuard implements CanActivate {
     if (!firebaseToken) {
       throw new ForbiddenException('Firebase token missing');
     }
-    const mobileNumber = await FirebaseUtils.getMobileNumber(firebaseToken);
-    if (!mobileNumber) {
+    const phoneNumber = await this.getPhoneNumber(firebaseToken);
+    if (!phoneNumber) {
       throw new BadRequestException('Could not extract mobile number');
     }
     request['user'] = {
-      mobileNumber,
+      phoneNumber,
     };
     return true;
+  }
+
+  async getPhoneNumber(firebaseToken: string) {
+    let phoneNumber: string;
+    try {
+      const firebaseTokenDecoded = await admin
+        .auth()
+        .verifyIdToken(firebaseToken);
+      
+      phoneNumber = firebaseTokenDecoded.phone_number as string;
+    } catch (err) {
+      switch (err.code) {
+        case 'auth/id-token-expired':
+          throw new ForbiddenException('Firebase token has expired');
+        case 'auth/argument-error':
+          throw new ForbiddenException('Firebase token in invalid');
+        default:
+          throw err;
+      }
+    }
+    return phoneNumber;
   }
 
   extractTokenFromRequest(
