@@ -93,6 +93,11 @@ export const dotenvConfig = (): ConfigModuleOptions => ({
       then: Joi.string().required(),
       otherwise: Joi.optional(),
     }),
+    FIREBASE_DYNAMICLINK: Joi.string().required(),
+    WEBAPIKEY: Joi.string().required(),
+    DOMAIN_URI_PREFIX: Joi.string().required(),
+    IOS_BUNDLE: Joi.string().required(),
+    ANDROID_BUNDLE: Joi.string().required()
   }),
   envFilePath: ['.env.local', '.env.development', '.env.production'],
   isGlobal: true,

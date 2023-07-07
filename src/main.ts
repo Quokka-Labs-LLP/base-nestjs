@@ -12,9 +12,18 @@ import { ResponseInterceptor } from '@interceptors/response.interceptor';
 import { AppModule } from './modules/app/app.module';
 import * as bodyParser from 'body-parser';
 import GlobalValidationPipe from '@pipes/global-validation.pipe';
+import * as admin from 'firebase-admin';
+import path from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  //initialize firebase sdk with config json, in my case its firebase.json created in root folder of project
+  admin.initializeApp({
+    credential: admin.credential.cert(
+      path.resolve(__dirname, './../firebase.json'),
+    ),
+  });
 
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));

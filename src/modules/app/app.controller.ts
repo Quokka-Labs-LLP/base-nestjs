@@ -2,6 +2,7 @@ import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ResponseInterface } from '@interfaces/Responses/response.interface';
 import { AppService } from './app.service';
+import * as admin from 'firebase-admin';
 
 @ApiTags(AppController.name)
 @Controller()
