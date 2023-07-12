@@ -3,6 +3,9 @@ import { ApiTags } from '@nestjs/swagger';
 import { ResponseInterface } from '@interfaces/Responses/response.interface';
 import { AppService } from './app.service';
 
+/**
+ *
+ */
 @ApiTags(AppController.name)
 @Controller()
 export class AppController {

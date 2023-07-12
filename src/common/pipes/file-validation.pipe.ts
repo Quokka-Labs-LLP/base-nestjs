@@ -5,6 +5,12 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 
+/**
+ *
+ * @param fileTypes File types that are allowed to process
+ * @param fileSize Maximum size allowed to process
+ * @returns ParseFilePipe to validate files
+ */
 const FileValidationPipe = (fileTypes: string, fileSize: number) => {
   return new ParseFilePipe({
     fileIsRequired: true,

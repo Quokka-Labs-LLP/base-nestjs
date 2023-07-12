@@ -4,6 +4,11 @@ import { MailerOptions } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { ConfigService } from '@nestjs/config';
 
+/**
+ *
+ * @param configService Need to get values from environment to config MailerOptions
+ * @returns MailerOptions to send mail
+ */
 export const mailConfig = (configService: ConfigService): MailerOptions => ({
   ...(configService.get('MAIL_MAILER').toLowerCase() === 'ses' && {
     transport: {

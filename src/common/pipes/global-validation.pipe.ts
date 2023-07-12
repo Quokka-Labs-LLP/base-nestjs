@@ -10,6 +10,11 @@ const GlobalValidationPipe = new ValidationPipe({
     enableImplicitConversion: true,
   },
   whitelist: true,
+  /**
+   *
+   * @param validationErrors Returned from any exceptions or validation rules
+   * @returns Strcutured validation errors returned from any exceptions or validation rules
+   */
   exceptionFactory: (validationErrors: ValidationError[] = []) => {
     const errors: any = {};
     validationErrors.forEach((err: ValidationError) => {

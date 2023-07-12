@@ -9,6 +9,9 @@ import { Observable, map } from 'rxjs';
 import { ResponseInterface } from '@interfaces/Responses/response.interface';
 import responsecodes from '@config/json/response-codes.json';
 
+/**
+ *
+ */
 @Injectable()
 export class ResponseInterceptor implements NestInterceptor {
   intercept(

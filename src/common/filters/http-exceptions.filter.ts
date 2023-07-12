@@ -7,6 +7,9 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { Response } from 'express';
 
+/**
+ *
+ */
 @Catch(HttpException)
 export class HttpExceptionsFilter implements ExceptionFilter {
   constructor(private readonly configService: ConfigService) {}

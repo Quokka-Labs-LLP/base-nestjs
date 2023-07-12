@@ -8,6 +8,9 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { Response } from 'express';
 
+/**
+ *
+ */
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
   constructor(private readonly configService: ConfigService) {}
