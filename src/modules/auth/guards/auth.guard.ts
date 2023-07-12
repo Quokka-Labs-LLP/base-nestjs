@@ -24,9 +24,37 @@ export class FirebaseGuard implements CanActivate {
         throw new ForbiddenException('Firebase token has expired');
       }
 
+      
+      // manage data in database => Get required user details from firebaseTokenDecoded and save it on db while user signup.
+      // check if email exist
+      // const userExist = await UserService.checkEmailExist(firebaseTokenDecoded.email)
+      // if(!userExist) {
+        // Sign up the user with given details
+
+        // let apple_username;
+        // In apple sign up, the name is available as firstName & lastName
+        // if(firebaseTokenDecoded.sign_in_provider === 'apple.com') {
+        //   apple_username = firebaseTokenDecoded.name.firstName + firebaseTokenDecoded.name.lastName
+        // }
+        
+        //   let user = {
+        //     name: apple_username || firebaseTokenDecoded.name,
+        //     picture: firebaseTokenDecoded.picture,
+        //     fireabase_uid: firebaseTokenDecoded.user_id,
+        //     provider: firebaseTokenDecoded.sign_in_provider
+        //   }
+          
+        //   if (firebaseTokenDecoded.firebase.identities.email?.length)
+        //     user.email = firebaseTokenDecoded.firebase.identities.email[0];
+
+        //   if (firebaseTokenDecoded.firebase.identities.phone?.length)
+        //     user.phone_number = firebaseTokenDecoded.firebase.identities.phone[0];
+
+        //   await UserService.createUser(user);
+        // }
+
       request['user'] = {
         userId: firebaseTokenDecoded.user_id,
-        email: firebaseTokenDecoded.email!
       };
 
       return true;
