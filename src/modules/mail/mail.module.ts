@@ -12,7 +12,8 @@ import { ConfigService } from '@nestjs/config';
     MailerModule.forRootAsync({
       /**
        *
-       * @param configService
+       * @param configService Need to pass config service to mailConfig method to configure mailer options
+       * @returns Mail configurations
        */
       useFactory: async (configService: ConfigService) =>
         mailConfig(configService),
