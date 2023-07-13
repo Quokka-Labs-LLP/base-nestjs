@@ -9,6 +9,9 @@ import { DATABASE_TYPE } from '@config/constant';
  */
 @Module({})
 export class DatabaseConnectModule {
+  /**
+   * @returns DynamicModule for database connection between MySQL and MongoDB.
+   */
   static forRoot(): DynamicModule {
     return {
       module: DatabaseConnectModule,
@@ -16,6 +19,9 @@ export class DatabaseConnectModule {
     };
   }
 
+  /**
+   * @returns DynamicModule for database connection between MySQL and MongoDB.
+   */
   private static getDatabaseModule(): DynamicModule {
     const config = new ConfigService();
     const databaseType = config.get<string>('DATABASE_TYPE');
@@ -28,8 +34,8 @@ export class DatabaseConnectModule {
 
         /**
          *
-         * @param configService Need to get values from environment to config MongoDB options
-         * @returns MongoDB connection
+         * @param configService Need to get values from environment to config MongoDB options.
+         * @returns MongoDB connection.
          */
         useFactory: (configService: ConfigService) => ({
           uri: configService.get('MONGO_URI'),
@@ -43,8 +49,8 @@ export class DatabaseConnectModule {
         imports: [ConfigModule],
         /**
          *
-         * @param configService Need to get values from environment to config MySQL database options
-         * @returns MySQL database connection
+         * @param configService Need to get values from environment to config MySQL database options.
+         * @returns MySQL database connection.
          */
         useFactory: (configService: ConfigService) => ({
           type: 'mysql',

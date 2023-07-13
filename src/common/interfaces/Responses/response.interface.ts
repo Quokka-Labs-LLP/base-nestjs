@@ -1,3 +1,6 @@
+/**
+ *
+ */
 export interface ResponseInterface {
   success?: boolean;
   status?: number;

@@ -19,6 +19,10 @@ const FileValidationPipe = (fileTypes: string, fileSize: number) => {
       new FileTypeValidator({ fileType: `.(${fileTypes})` }),
       new MaxFileSizeValidator({ maxSize: fileSize }),
     ],
+    /**
+     *
+     * @param error File validation error
+     */
     exceptionFactory(error) {
       throw new UnprocessableEntityException({
         users_csv_file: error,

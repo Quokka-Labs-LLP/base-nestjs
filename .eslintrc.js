@@ -20,10 +20,19 @@ module.exports = {
   ignorePatterns: ['.eslintrc.js', 'dist/*'],
   rules: {
     'jsdoc/require-jsdoc': [1, {
+      publicOnly: true,
       contexts: [
-        'ClassDeclaration',
-        'ClassProperty',
-        'ArrowFunctionExpression'
+        "ArrowFunctionExpression",
+        "FunctionDeclaration",
+        "FunctionExpression",
+        "MethodDefinition",
+        "ClassDeclaration",
+        "ClassExpression",
+        "ClassProperty",
+        "TSDeclareFunction", // function without body
+        "TSEnumDeclaration",
+        "TSInterfaceDeclaration",
+        "TSModuleDeclaration", // namespace
       ]
     }],
     'prettier/prettier': [
