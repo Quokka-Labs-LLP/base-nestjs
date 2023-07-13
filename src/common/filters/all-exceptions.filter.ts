@@ -8,10 +8,22 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { Response } from 'express';
 
+/**
+ *
+ */
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
+  /**
+   *
+   * @param configService Inject config service object to use in the methods
+   */
   constructor(private readonly configService: ConfigService) {}
 
+  /**
+   *
+   * @param exception Will get any type of exceptions that will be unknown.
+   * @param host Provides methods for retrieving the arguments being passed to a handler. Allows choosing the appropriate execution context (e.g., Http, RPC, or WebSockets) to retrieve the arguments from.
+   */
   catch(exception: unknown, host: ArgumentsHost): void {
     const env =
       this.configService.get('NODE_ENV') === 'local' ||

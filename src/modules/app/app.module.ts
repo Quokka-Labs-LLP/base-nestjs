@@ -6,6 +6,9 @@ import { MailModule } from '../mail/mail.module';
 import { dotenvConfig } from '@config/dotenv.config';
 import { DatabaseConnectModule } from '../../common/db/database-connect.module';
 
+/**
+ *
+ */
 @Module({
   imports: [
     ConfigModule.forRoot(dotenvConfig()),

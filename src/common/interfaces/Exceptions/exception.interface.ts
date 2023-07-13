@@ -1,3 +1,6 @@
+/**
+ *
+ */
 export interface ExceptionInterface {
   success?: boolean;
   status?: number;

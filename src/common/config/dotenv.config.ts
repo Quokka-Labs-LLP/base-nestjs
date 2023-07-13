@@ -1,6 +1,9 @@
 import * as Joi from 'joi';
 import { ConfigModuleOptions } from '@nestjs/config';
 
+/**
+ * @returns Validated environment variables using JOI npm package
+ */
 export const dotenvConfig = (): ConfigModuleOptions => ({
   validationSchema: Joi.object({
     NODE_ENV: Joi.string().required(),

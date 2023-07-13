@@ -10,6 +10,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
     'plugin:sonarjs/recommended',
+    'plugin:jsdoc/recommended-typescript-error'
   ],
   root: true,
   env: {
@@ -18,6 +19,22 @@ module.exports = {
   },
   ignorePatterns: ['.eslintrc.js', 'dist/*'],
   rules: {
+    'jsdoc/require-jsdoc': [1, {
+      publicOnly: true,
+      contexts: [
+        "ArrowFunctionExpression",
+        "FunctionDeclaration",
+        "FunctionExpression",
+        "MethodDefinition",
+        "ClassDeclaration",
+        "ClassExpression",
+        "ClassProperty",
+        "TSDeclareFunction", // function without body
+        "TSEnumDeclaration",
+        "TSInterfaceDeclaration",
+        "TSModuleDeclaration", // namespace
+      ]
+    }],
     'prettier/prettier': [
       'error',
       {

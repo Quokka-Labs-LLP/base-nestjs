@@ -13,6 +13,9 @@ import { AppModule } from './modules/app/app.module';
 import * as bodyParser from 'body-parser';
 import GlobalValidationPipe from '@pipes/global-validation.pipe';
 
+/**
+ *
+ */
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -63,6 +66,12 @@ async function bootstrap() {
       .build();
 
     const documentOptions: SwaggerDocumentOptions = {
+      /**
+       *
+       * @param controllerKey Controller name
+       * @param methodKey Method name
+       * @returns Concatenated contoller name and method name
+       */
       operationIdFactory: (controllerKey: string, methodKey: string) =>
         `${controllerKey}@${methodKey}`,
     };
