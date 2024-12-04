@@ -12,6 +12,7 @@ import { ResponseInterceptor } from '@interceptors/response.interceptor';
 import { AppModule } from './modules/app/app.module';
 import * as bodyParser from 'body-parser';
 import GlobalValidationPipe from '@pipes/global-validation.pipe';
+import { NotFoundMiddleware } from '@middlewares/not-found-middleware';
 
 /**
  *
@@ -93,6 +94,8 @@ async function bootstrap() {
       styleOptions,
     );
   }
+
+  app.use(new NotFoundMiddleware().use);
 
   // Listening server on port
   const serverPort = configService.get('SERVER_PORT');
