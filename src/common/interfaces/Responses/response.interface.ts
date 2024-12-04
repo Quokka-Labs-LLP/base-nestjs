@@ -2,9 +2,9 @@
  *
  */
 export interface ResponseInterface {
-  success?: boolean;
-  status?: number;
-  message?: string;
+  success: boolean;
+  httpStatusCode?: number; // Explicitly set an HTTP response status code
+  code?: number;
   data?: object;
-  metadata?: object;
+  message?: string;
 }

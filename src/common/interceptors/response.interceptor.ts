@@ -24,19 +24,33 @@ export class ResponseInterceptor implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler<any>,
   ): Observable<any> | Promise<Observable<any>> {
+    const ctx = context.switchToHttp();
+    const httpResponse = ctx.getResponse();
+
     return next.handle().pipe(
       map((response: ResponseInterface) => {
         if (response instanceof StreamableFile) {
           return response;
         }
+
+        if (response.httpStatusCode) {
+          httpResponse.status(response.httpStatusCode);
+        }
+
         return {
-          success: true,
-          status: response.status,
-          message:
-            responsecodes[
-              String(response?.status) as keyof typeof responsecodes
-            ] || '',
+          code: response.code,
+          message: !response.success
+            ? response.message ?? null
+            : responsecodes[
+                String(response?.code) as keyof typeof responsecodes
+              ] || null,
           data: response.data || new Object(),
+          error:
+            (!response.success &&
+              responsecodes[
+                String(response?.code) as keyof typeof responsecodes
+              ]) ||
+            undefined,
         };
       }),
     );

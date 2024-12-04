@@ -1,4 +1,7 @@
 {
   "999": "No data found",
-  "1000": "Request processed"
+  "1000": "getHome called successfully",
+  "1001": "healthCheck called successfully",
+  "1002": "sayMyName called successfully",
+  "1003": "Invalid password"
 }

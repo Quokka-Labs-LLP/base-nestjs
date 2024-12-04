@@ -4,6 +4,7 @@ import {
   ArgumentsHost,
   HttpException,
   HttpStatus,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Response } from 'express';
@@ -32,28 +33,41 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const context = host.switchToHttp();
     const response = context.getResponse<Response>();
 
-    response
-      .status(
-        exception instanceof HttpException
-          ? exception.getStatus()
-          : HttpStatus.INTERNAL_SERVER_ERROR,
-      )
-      .json({
-        success: false,
-        status:
-          exception instanceof HttpException
-            ? exception.getStatus()
-            : HttpStatus.INTERNAL_SERVER_ERROR,
-        message:
-          exception instanceof HttpException
-            ? exception.message
-            : 'Internal server error',
-        data: {
-          ...(env &&
-            exception instanceof HttpException && {
-              error: exception.getResponse(),
-            }),
-        },
-      });
+    const httpStatusCode = getHttpStatusCode(exception);
+    const message = getMessage(exception);
+
+    response.status(httpStatusCode).json({
+      // success: false,
+      code: httpStatusCode,
+      message,
+      error:
+        exception instanceof UnprocessableEntityException
+          ? typeof exception === 'object' &&
+            exception &&
+            'response' in exception
+            ? exception.getResponse()
+            : null
+          : env
+          ? typeof exception === 'object' && exception && 'stack' in exception
+            ? exception.stack
+            : null
+          : null,
+    });
   }
+}
+
+function getHttpStatusCode(exception: unknown) {
+  return exception instanceof UnprocessableEntityException
+    ? HttpStatus.BAD_REQUEST
+    : exception instanceof HttpException
+    ? exception.getStatus()
+    : HttpStatus.INTERNAL_SERVER_ERROR;
+}
+
+function getMessage(exception: unknown) {
+  return exception instanceof UnprocessableEntityException
+    ? 'Invalid request body or query paramter(s)'
+    : exception instanceof HttpException
+    ? exception.message
+    : 'Internal server error';
 }

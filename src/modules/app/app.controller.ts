@@ -1,7 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  RequestTimeoutException,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ResponseInterface } from '@interfaces/Responses/response.interface';
 import { AppService } from './app.service';
+import { sayMyNameDTO } from './dtos/say-my-name.dto';
 
 /**
  *
@@ -20,8 +27,7 @@ export class AppController {
    */
   @Get('home')
   async getHello(): Promise<ResponseInterface> {
-    const response = this.appService.getHello();
-    return { status: 1000, data: { response } };
+    return this.appService.getHello();
   }
 
   /**
@@ -29,7 +35,31 @@ export class AppController {
    */
   @Get('healthcheck')
   async healthCheck(): Promise<ResponseInterface> {
-    const response = this.appService.healthCheck();
-    return { status: 1000, data: { response } };
+    return this.appService.healthCheck();
+  }
+
+  /**
+   * @param body - The request body containing name and age.
+   * @returns ResponseInterface type response
+   */
+  @Post('saymyname')
+  async sayMyName(@Body() body: sayMyNameDTO): Promise<ResponseInterface> {
+    return this.appService.sayMyName(body.name, body.age);
+  }
+
+  /**
+   * @returns ResponseInterface type response
+   */
+  @Get('throwerror')
+  async throwError(): Promise<ResponseInterface> {
+    throw new RequestTimeoutException();
+  }
+
+  /**
+   * @returns ResponseInterface type response
+   */
+  @Post('businessvalidation')
+  async businessValidationFail(): Promise<ResponseInterface> {
+    return this.appService.businessValidationFail();
   }
 }
